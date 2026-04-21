@@ -1,0 +1,25 @@
+{
+  "topic_keywords": [
+    "data analytics", "data science", "data scientist", "data analyst",
+    "reliability engineer", "industrial analytics", "energy analytics",
+    "energy analysis", "energy consulting", "gas turbine",
+    "industrial data", "predictive analytics", "predictive modeling",
+    "predictive maintenance", "machine learning", "AI consultant",
+    "business analytics", "data pipeline", "ETL", "dashboard",
+    "sensor data", "time series", "anomaly detection"
+  ],
+  "intent_keywords": [
+    "looking for", "need help with", "seeking", "hiring",
+    "struggling with", "consultant for", "freelance",
+    "need a data", "help with predictive", "looking to hire",
+    "recommend consultant", "who can help with"
+  ],
+  "subreddits": [
+    "forhire", "dataanalysis", "datascience", "MachineLearning",
+    "consulting", "reliability", "energy", "OilAndGas",
+    "industrial", "PredictiveMaintenance", "automation",
+    "businessintelligence", "dataengineering", "engineering"
+  ],
+  "min_score": 4,
+  "max_age_hours": 72
+}
