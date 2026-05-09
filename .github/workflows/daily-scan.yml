@@ -1,39 +1,53 @@
-name: Daily Lead Scan
+name: Daily Lead Scanner
 
 on:
   schedule:
-    - cron: '0 14 * * *'   # 2pm UTC daily
-  workflow_dispatch:       # Manual trigger button
+    - cron: '0 9 * * *'  # 9 AM UTC daily
+  workflow_dispatch:  # Allow manual runs
 
 jobs:
   scan:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
+    
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - run: pip install feedparser tweepy python-dateutil
-
-      - name: Run scanner
-        env:
-          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN || '' }}
-        run: python scan.py | tee /tmp/daily-leads.md
-
-      - name: Create Daily Leads Issue
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const body = fs.readFileSync('/tmp/daily-leads.md', 'utf8');
-            const date = new Date().toISOString().split('T')[0];
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `Daily Leads – ${date}`,
-              body: body,
-              labels: ['leads']
-            });
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    
+    - name: Run lead scanner
+      env:
+        TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
+      run: |
+        python scan.py
+    
+    - name: Create GitHub Issue
+      if: always()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const path = '/tmp/daily-leads.md';
+          
+          let body = 'No leads found today.';
+          if (fs.existsSync(path)) {
+            body = fs.readFileSync(path, 'utf8');
+          }
+          
+          const today = new Date().toISOString().split('T')[0];
+          const title = `Daily Leads – ${today}`;
+          
+          await github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: title,
+            body: body,
+            labels: ['daily-scan', 'leads']
+          });
+        github-token: ${{ secrets.GITHUB_TOKEN }}
