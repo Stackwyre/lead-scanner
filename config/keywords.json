@@ -1,25 +1,59 @@
 {
+  "subreddits": [
+    "forhire",
+    "freelance",
+    "consulting",
+    "entrepreneur",
+    "startups",
+    "engineering",
+    "MachineLearning",
+    "datascience",
+    "analytics",
+    "industrialengineering",
+    "energy",
+    "predictivemaintenance",
+    "BusinessIntelligence"
+  ],
   "topic_keywords": [
-    "data analytics", "data science", "data scientist", "data analyst",
-    "reliability engineer", "industrial analytics", "energy analytics",
-    "energy analysis", "energy consulting", "gas turbine",
-    "industrial data", "predictive analytics", "predictive modeling",
-    "predictive maintenance", "machine learning", "AI consultant",
-    "business analytics", "data pipeline", "ETL", "dashboard",
-    "sensor data", "time series", "anomaly detection"
+    "data analytics",
+    "predictive modeling",
+    "machine learning",
+    "industrial analytics",
+    "gas turbine",
+    "turbine",
+    "energy",
+    "power generation",
+    "maintenance",
+    "reliability",
+    "sensor data",
+    "performance optimization",
+    "efficiency",
+    "manufacturing",
+    "production",
+    "thermal",
+    "mechanical",
+    "tensorflow",
+    "keras",
+    "python",
+    "model",
+    "dataset"
   ],
   "intent_keywords": [
-    "looking for", "need help with", "seeking", "hiring",
-    "struggling with", "consultant for", "freelance",
-    "need a data", "help with predictive", "looking to hire",
-    "recommend consultant", "who can help with"
+    "looking for",
+    "need help",
+    "struggling with",
+    "consultant",
+    "freelance",
+    "hiring",
+    "seeking",
+    "advice",
+    "expert",
+    "specialist",
+    "contractor",
+    "project",
+    "help with",
+    "assistance",
+    "guidance"
   ],
-  "subreddits": [
-    "forhire", "dataanalysis", "datascience", "MachineLearning",
-    "consulting", "reliability", "energy", "OilAndGas",
-    "industrial", "PredictiveMaintenance", "automation",
-    "businessintelligence", "dataengineering", "engineering"
-  ],
-  "min_score": 4,
-  "max_age_hours": 72
+  "min_score": 8
 }
