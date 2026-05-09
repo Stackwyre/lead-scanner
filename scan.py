@@ -22,46 +22,13 @@ def matches_intent(text: str, intent_keywords: List[str]) -> bool:
 
 
 def is_relevant_lead(title: str, text: str, topic_keywords: List[str]) -> bool:
-    """Filter out irrelevant leads that don't match Harrison's expertise"""
+    """Filter out leads that are clearly irrelevant to data analytics/industrial AI"""
     combined = f"{title} {text}".lower()
 
-    # Harrison's expertise areas
-    relevant_terms = [
-        "data analytics",
-        "predictive modeling",
-        "machine learning",
-        "ml",
-        "ai",
-        "industrial",
-        "energy",
-        "gas turbine",
-        "turbine",
-        "maintenance",
-        "sensor data",
-        "performance",
-        "efficiency",
-        "engineering",
-        "python",
-        "tensorflow",
-        "keras",
-        "model",
-        "dataset",
-        "analysis",
-        "optimization",
-        "manufacturing",
-        "production",
-        "power",
-        "thermal",
-        "mechanical",
-    ]
-
-    # Check if any relevant terms are present
-    has_relevant_terms = any(term in combined for term in relevant_terms)
-
-    # Exclude clearly irrelevant categories
-    irrelevant_terms = [
+    # Irrelevant keywords that indicate non-technical roles
+    irrelevant_keywords = [
         "gaming",
-        "video edit",
+        "video editor",
         "content creator",
         "social media",
         "instagram",
@@ -69,21 +36,47 @@ def is_relevant_lead(title: str, text: str, topic_keywords: List[str]) -> bool:
         "shoe brand",
         "fashion",
         "marketing campaign",
+        "app testing",
         "ui/ux",
-        "frontend",
-        "website design",
-        "graphic design",
-        "creative design",
+        "frontend developer",
+        "creative designer",
         "account management",
-        "hiring thread",
         "internship",
-        "bbc",
-        "property tax",
+        "$15/hr",
+        "$20 for",
+        "android smartphone",
     ]
 
-    has_irrelevant_terms = any(term in combined for term in irrelevant_terms)
+    # If it contains irrelevant keywords and no relevant technical terms, skip it
+    if any(keyword in combined for keyword in irrelevant_keywords):
+        relevant_tech_terms = [
+            "data",
+            "analytics",
+            "machine learning",
+            "ml",
+            "ai",
+            "artificial intelligence",
+            "predictive",
+            "model",
+            "algorithm",
+            "engineering",
+            "industrial",
+            "sensor",
+            "maintenance",
+            "performance",
+            "optimization",
+            "tensorflow",
+            "python",
+            "statistics",
+            "analysis",
+            "database",
+            "sql",
+            "business intelligence",
+        ]
+        if not any(term in combined for term in relevant_tech_terms):
+            return False
 
-    return has_relevant_terms and not has_irrelevant_terms
+    return True
 
 
 def score_lead(
@@ -153,7 +146,6 @@ def scan_reddit_rss(config) -> List[Dict]:
                 if not matches_intent(f"{title} {text}", config["intent_keywords"]):
                     continue
 
-                # Filter for relevance to Harrison's expertise
                 if not is_relevant_lead(title, text, config["topic_keywords"]):
                     continue
 
